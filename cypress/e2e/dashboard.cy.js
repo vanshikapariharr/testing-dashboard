@@ -59,4 +59,55 @@ describe('Testing Analytics Dashboard', () => {
     cy.get('[data-cy="test-row"]').should('have.length', 50)
   })
 
+  // TEST 9: Filter bar is visible
+  it('should display the filter bar', () => {
+    cy.get('[data-cy="filter-bar"]').should('be.visible')
+    cy.get('[data-cy="filter-all"]').should('be.visible')
+    cy.get('[data-cy="filter-passed"]').should('be.visible')
+    cy.get('[data-cy="filter-failed"]').should('be.visible')
+  })
+
+  // TEST 10: Passed card shows correct color class
+  it('should show passed card', () => {
+    cy.get('[data-cy="passed-card"]').should('be.visible')
+    cy.get('[data-cy="passed-count"]').should('be.visible')
+  })
+
+  // TEST 11: Failed card shows correct data
+  it('should show failed card', () => {
+    cy.get('[data-cy="failed-card"]').should('be.visible')
+    cy.get('[data-cy="failed-count"]').should('be.visible')
+  })
+
+  // TEST 12: Pass rate card is visible
+  it('should show pass rate card', () => {
+    cy.get('[data-cy="rate-card"]').should('be.visible')
+    cy.get('[data-cy="pass-rate"]').should('contain.text', '%')
+  })
+
+  // TEST 13: Filter switches correctly between passed and failed
+  it('should switch between passed and failed filters', () => {
+    cy.get('[data-cy="filter-passed"]').click()
+    cy.get('[data-cy="test-count"]').should('contain.text', '38 tests')
+    cy.get('[data-cy="filter-failed"]').click()
+    cy.get('[data-cy="test-count"]').should('contain.text', '12 tests')
+  })
+
+  // TEST 14: Table has correct columns
+  it('should display correct table columns', () => {
+    cy.get('.test-table th').eq(0).should('contain.text', 'Test Name')
+    cy.get('.test-table th').eq(1).should('contain.text', 'Suite')
+    cy.get('.test-table th').eq(2).should('contain.text', 'Status')
+    cy.get('.test-table th').eq(3).should('contain.text', 'Duration')
+    cy.get('.test-table th').eq(4).should('contain.text', 'Date')
+  })
+
+  // TEST 15: First test row has correct data
+  it('should display correct data in first test row', () => {
+    cy.get('[data-cy="test-row"]').first().within(() => {
+      cy.get('[data-cy="test-name"]').should('contain.text', 'should open the app')
+      cy.get('[data-cy="test-status"]').should('contain.text', 'passed')
+    })
+  })
+
 })
